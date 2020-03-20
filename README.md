@@ -1,4 +1,4 @@
-# data_structure笔记
+# data_structure笔记-pytho实现
 [参考1](https://github.com/cforth/toys)
 
 [参考2](https://github.com/CYBruce/DataStructure_Algorithm_ZJU) 
