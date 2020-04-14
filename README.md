@@ -9,6 +9,8 @@
 
 [参考5只有树和链表](https://github.com/wangpanjun/datastructure)
 
-[参考6剑指offer中的问题python实现](https://github.com/lesywix/oh-my-python)
+[参考6剑指offer中的问题python实现](https://github.com/lesywix/oh-my-python)  
+
+[公众号推荐参考）(https://github.com/labuladong/fucking-algorithm)  
 
 [书本](https://runestone.academy/runestone/books/published/pythonds/index.html)
