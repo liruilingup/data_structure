@@ -1,5 +1,5 @@
 # data_structure笔记-pytho实现
-[参考1](https://github.com/cforth/toys)
+[参考1：主要是python3，有树](https://github.com/cforth/toys)
 
 [参考2](https://github.com/CYBruce/DataStructure_Algorithm_ZJU) 
 
