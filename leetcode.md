@@ -356,3 +356,212 @@ print(a)
 ```
 
 ------
+
+
+### 排序的分类
+* 插入排序：直接插入排序  希尔排序
+* 交换排序：冒泡排序  快速排序
+* 选择排序：简单选择排序  堆排序
+* 归并排序
+
+
+#####  直接插入排序
+
+* 对于给定的一组记录，初始时假定第一个记录自成一个有序的序列，其余的记录为无序序列；接着从第二个记录开始，按照记录的大小依次将当前处理的记录插入到其之前的有序序列中，直至最后一个记录插入到有序序列为止。
+
+```python
+nums = [5, 2, 45, 6, 8, 2, 1]
+def DirectInsertionSort(nums):
+    for i in range(1, len(nums)):
+        if nums[i-1] > nums[i]:
+            index, temp = i, nums[i]
+            while index > 0 and nums[index-1] > temp:
+                nums[index] = nums[index - 1]
+                index -= 1
+            nums[index] = temp
+
+    print(nums)  
+DirectInsertionSort(nums)
+
+
+```
+
+
+
+
+#####  希尔排序
+* 改进插入排序
+* 希尔排序也称为“缩小增量排序”，基本原理是：首先将待排序的元素分为多个子序列，使得每个子序的元素个数相对较少，对各个子序分别进行直接插入排序，待整个待排序序列“基本有序后”，再对所有元素进行一次直接插入排序。
+
+```python
+nums = [3, 12, 20, 2, 16, 14, 14, 11, 7, 14]
+def ShellSort(nums):
+    n = len(nums)
+    gap = n // 2 # 步长
+    while gap>= 1:
+        for i in range(gap, n, 1): #可以设定步长
+            j = i
+            temp = nums[j]
+            while j>=gap and nums[j-gap] >= temp: #该位置的数比temp大就往后移
+                nums[j] = nums[j-gap]
+                j -= gap
+            nums[j] = temp
+        gap = gap // 2  # 控制间隙的变化
+ShellSort(nums)
+print(nums)
+
+```
+
+#####  冒泡排序
+* 比较相邻的元素。如果第一个比第二个大，就交换他们两个。
+```python
+nums = [5,2,45,6,8,2,1]
+def bubble_sort(nums):
+    for i in range(len(nums)):
+        for j in range(len(nums)-1-i):
+            if nums[j] > nums[j + 1]:
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+    print(nums)
+bubble_sort(nums)
+
+```
+
+
+
+
+##### 快速排序（高效）
+* 采用“分而治之”的思想，把大的拆分为小的，小的在拆分为更小的。
+* 原理：对于一组给定的记录，通过一趟排序后，将原序列分为两部分，其中前部分的所有记录均比后部分的所有记录小，然后再依次对前后两部分的记录进行快速排序，递归该过程，直到序列中的所有记录均为有序为止。
+
+```python
+# 通过比较大小进行移动，然后使用递归，注意myList[i] = base
+def QuickSort(myList, start, end):
+    if start < end:
+        i, j = start, end
+        base = myList[i]
+        while i < j:
+            while (i < j) and (myList[j] >= base):
+                j -= 1    
+            myList[i] = myList[j]
+            while (i < j) and (myList[i] <= base):
+                i += 1
+            myList[j] = myList[i]
+        myList[i] = base
+        QuickSort(myList, start, i - 1)
+        QuickSort(myList, j + 1, end)
+    return myList
+
+
+myList = [7, 6, 5, 3, 12, 20, 1, 9, 11, 4, 15, 10, 8]
+print("myList:",QuickSort(myList, 0, len(myList) - 1))
+
+```
+
+
+
+##### 简单选择排序
+* 从无序数列中选取最小的元素和无序数列中的第一个元素交换，每轮都可以确定最小元素的位置。直到选到一个最小的数，将它放在第一位
+* 对于给定的一组记录，经过第一轮比较后得到最小的记录，然后将记录与第一个记录的位置进行交换；接着对不包括第一个记录以外的其他记录进行第二轮排序，得到最小的记录并与第二个记录进行位置交换；重复该过程，直到进行比较的记录只有一个为止。
+
+```python
+def simpleSelectSort(series):
+    for i in range(len(series)):
+        for j in range(i+1,len(series)):
+            if series[j] < series[i]:
+                series[j],series[i] = series[i],series[j]
+
+data = [5, 2, 8, 4, 7, 4, 3, 9, 2, 0, 1,16]
+simpleSelectSort(data)
+print(data)
+```
+
+
+
+##### 归并排序
+* 先分开再合并，分开成单个元素，合并的时候按照正确顺序合并（分成两个函数，一个拆分数组，一个合并数组）
+* 利用递归与分治技术将数据序列划分为越来越小的半子表，再对半子表排序，最后再用递归步骤将排好序的半子表合并成为越来越大的有序序列。
+* 原理：对于给定的一组记录，首先将两个相邻的长度为1的子序列进行归并，得到n/2个长度为2或者1的有序子序列，在将其两两归并，反复执行此过程，直到得到一个有序的序列为止。
+
+```python
+def merge_sort(li):
+    #不断递归调用自己一直到拆分成成单个元素的时候就返回这个元素，不再拆分了
+    if len(li) == 1:
+        return li
+    #取拆分的中间位置
+    mid = len(li) // 2  #取整除
+    #拆分过后左右两侧子串
+    left = li[:mid]
+    right = li[mid:]
+
+    #对拆分过后的左右再拆分 一直到只有一个元素为止
+    #最后一次递归时候ll和lr都会接到一个元素的列表
+    # 最后一次递归之前的ll和rl会接收到排好序的子序列
+    ll = merge_sort(left)
+    rl =merge_sort(right)
+
+    # 我们对返回的两个拆分结果进行排序后合并再返回正确顺序的子列表
+    # 这里我们调用拎一个函数帮助我们按顺序合并ll和lr
+    return merge(ll , rl)
+
+#这里接收两个列表
+def merge(left , right ):
+    # 从两个有顺序的列表里边依次取数据比较后放入result
+    # 每次我们分别拿出两个列表中最小的数比较，把较小的放入result
+    result = []
+    while len(left)>0 and len(right)>0 :
+        #为了保持稳定性，当遇到相等的时候优先把左侧的数放进结果列表，因为left本来也是大数列中比较靠左的
+        if left[0] <= right[0]:
+            result.append(left.pop(0)) # left.pop(0)是列表的第一个数字
+        else:
+            result.append(right.pop(0))
+    #while循环出来之后 说明其中一个数组没有数据了，我们把另一个数组添加到结果数组后面
+    result += left
+    result += right
+    return result
+
+if __name__ == '__main__':
+    nums = [5, 2, 8, 4, 7, 4, 3, 9, 2, 0, 1,16]
+    li2 = merge_sort(nums)
+    print(li2)
+
+```
+
+
+------
+
+### 查找
+
+##### 二分查找
+* 二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。
+
+```python
+def binary_search(nums,item):
+    """二分查找"""
+    n = len(nums)
+    low = 0
+    high = n-1
+    while low<=high:
+        mid_index = (low+high)//2
+        if nums[mid_index] == item:
+            return "找到元素! 在原列表索引为{0}的位置".format(mid_index)
+ 
+        elif nums[mid_index]<item:
+            low = mid_index+1
+        else:
+            high = mid_index-1
+    return "未能找到"
+ 
+if __name__ == '__main__':
+    nums = [1,3,4,9,10,15,17,34]
+    result_index1 = binary_search(nums,9)
+    result_index2 = binary_search(nums,2)
+    print("能否查找到 9：",result_index1)
+    print("能否查找到 2：",result_index2)
+```
+
+------
+
+
+
+
+
