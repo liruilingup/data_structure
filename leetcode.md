@@ -560,8 +560,245 @@ if __name__ == '__main__':
 ```
 
 ------
+### 排列、组合、子集
+
+##### 组合，1-n里面选取k个数组合
+* 方式一
+```python
+from typing import List
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        # 先把不符合条件的情况去掉
+        if n <= 0 or k <= 0 or k > n:
+            return []
+        res = []
+        self.__dfs(1, k, n, [], res)
+        return res
+
+    def __dfs(self, start, k, n, pre, res):
+        # 当前已经找到的组合存储在 pre 中，需要从 start 开始搜索新的元素
+        # 在第 k 层结算
+        if len(pre) == k:
+            res.append(pre[:])
+            return
+
+        for i in range(start, n + 1):
+            pre.append(i)
+            # 因为已经把 i 加入到 pre 中，下一轮就从 i + 1 开始
+            # 注意和全排列问题的区别，因为按顺序选择，因此无须使用 used 数组
+            self.__dfs(i + 1, k, n, pre, res)
+            # 回溯的时候，状态重置
+            pre.pop()
+a = Solution().combine(4,3)
+print(a)
+```
+* 方式二，同方法一但是又一种写法
+
+```python
+def dfs(start, k,n,tmp,res):
+    if len(tmp) == k:
+        res.append(tmp[:])
+    else:
+        for i in range(start, n+1): #4的时候，for没有运行，返回，又pop()所以没有[4]
+            tmp.append(i)
+            dfs(i+1, k,n,tmp,res)
+            tmp.pop()
+res = []
+tmp = []
+dfs(1,2,4,tmp,res)
+print(res)
+```
+
+
+##### 组合总数
+* 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+
+```python
+# nonlocal
+# 第一，两者的功能不同。global关键字修饰变量后标识该变量是全局变量，对该变量进行修改就是修改全局变量，而nonlocal关键字修饰变量后标识该变量是上一级函数中的局部变量，如果上一级函数中不存在该局部变量，nonlocal位置会发生错误（最上层的函数使用nonlocal修饰变量必定会报错）。
+# 第二，两者使用的范围不同。global关键字可以用在任何地方，包括最上层函数中和嵌套函数中，即使之前未定义该变量，global修饰后也可以直接使用，而nonlocal关键字只能用于嵌套函数中，并且外层函数中定义了相应的局部变量，否则会发生错误
+
+candidates = [3,2,6,7] 
+target = 7
+res = []
+tmp_list = []
+def zuhe(tmp, tmp_list):
+    if tmp == target:
+        res.append(tmp_list[:])
+    if tmp > target:
+        return
+    for i in candidates: 
+        if tmp_list and  tmp_list[-1] > i: #防止重复的
+            continue
+        zuhe(tmp+i, tmp_list+[i])
+zuhe(0, [])
+print(res)
+```
+
+
+##### 组合总数2
+* 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+```python
+candidates = [2,5,2,1,2]
+target = 5
+result = []
+candidates.sort()
+# [1, 1, 2, 5, 6, 7, 10]
+
+print('-----------',candidates)
+def zuhe2(tmp, tmp_list, nums):
+    print(nums)
+    if tmp == target :
+        result.append(tmp_list[:])
+    if tmp > target:
+        return
+    for i in range(len(nums)):
+        if i > 0 and nums[i] == nums[i-1]:  #相同时需要剪枝
+            continue
+        tmp_list.append(nums[i])
+        zuhe2(tmp + nums[i], tmp_list, nums[i+1:]) #递归返回的数组
+        tmp_list.pop()
+
+zuhe2(0, [], candidates)
+print(result)
+
+
+```
+
+
+##### 子集，同m个数组中选取n个进行排列
+* 给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）
+```python
+nums = [1,2,3,4,5]
+res = []
+res.append([])
+res.append(nums)
+for k in nums:
+    res.append([k])
+print(res)
+# 选一些数字进行排列
+
+def zuhe_n(nums, tmp, n):
+    if len(tmp) == n:
+        res.append(tmp[:])
+    else:
+        for i in range(len(nums)):
+            tmp.append(nums[i])
+            zuhe_n(nums[i+1:], tmp,n)  #递归的条件
+            tmp.pop()
+    return res
+
+for i in range(2, len(nums)):
+    a = zuhe_n(nums, [], i)
+print(res)
+```
 
 
 
+##### 子集2，数组有重复的
+* https://leetcode-cn.com/problems/subsets-ii/solution/hui-su-suan-fa-by-powcai-6/
+* 方法一、同子集1一样，但是去掉重复的列表，nums需要排序
+```python
+
+
+nums = [1,2,2]
+nums.sort()
+res = []
+res.append([])
+res.append(nums)
+for k in nums:
+    if [k] not in res:
+        res.append([k])
+print(res)
+
+def zuhe_n(nums, tmp, n):
+    if len(tmp) == n and tmp[:] not in res:
+        res.append(tmp[:])
+    else:
+        for i in range(len(nums)):
+            tmp.append(nums[i])
+            zuhe_n(nums[i+1:], tmp,n)  #递归的条件
+            tmp.pop()
+    return res
+
+for i in range(2, len(nums)):
+    a = zuhe_n(nums, [], i)
+print(res)
+```
+
+
+
+* 方法二、递归
+
+```python
+
+nums = [1,2,4,4,4,4,4,4]
+res = []
+n = len(nums)
+
+nums.sort()
+def helper(idx, tmp):
+    res.append(tmp)
+    for i in range(idx, n):
+        if i > idx and nums[i] == nums[i-1]:
+            continue
+        helper(i + 1, tmp + [nums[i]])
+
+helper(0, [])
+print(res)
+
+
+```
+
+
+* 方法三、迭代
+```python
+nums = [1,2,4,4,4,4,4,4]
+
+res = [[]]
+cur = []
+
+for i in range(len(nums)):
+    print(res)
+    if i > 0 and nums[i-1] == nums[i]:
+        cur = [tmp + [nums[i]] for tmp in cur]
+    else:
+        cur = [tmp + [nums[i]] for tmp in res]
+
+    res += cur
+
+print(res)
+
+
+```
+
+##### 买卖股票1
+* 交易一次
+```python
+# 画出折线图，落差最大的就是
+prices = [7,1,5,3,6,4]
+minprice = float('inf')
+maxprofit = 0
+for price in prices:
+    minprice = min(minprice, price)
+    maxprofit = max(maxprofit, price - minprice)
+print(maxprofit)
+```
+
+##### 买卖股票2
+* 交易多次
+```python
+# 使用贪心，只要第二天大于第一天的卖掉
+prices = [7,1,5,3,6,4]
+profit = 0
+for i in range(1, len(prices)):
+    tmp = prices[i] - prices[i - 1]
+    if tmp > 0:
+        profit += tmp
+print(profit)
+```
+
+
+-------
 
 
