@@ -5,7 +5,23 @@
 * abs(a - b) 表示绝对值
 * max(a, b) 取最大的
 * 指针可以使用start、end 或者 left、right
-
+##### python初始化函数
+```python
+# 初始化函数没有参数
+class tree:
+    def __init__(self):
+        return
+# 初始化函数有参数
+class tree:
+    def __init__(self, item, left=None, right=None):
+        self.item = item
+        self.left = left
+        self.right = right
+```
+##### python打印不换行
+```python
+for i in range(4):
+	print(i, end = ' ')
 
 ------
 
