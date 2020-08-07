@@ -5,6 +5,7 @@
 * abs(a - b) 表示绝对值
 * max(a, b) 取最大的
 * 指针可以使用start、end 或者 left、right
+* python反转一个列表
 ```python
 for i in range(5, 0, -1):
     print(i)   # 结果是5，4，3，2，1
