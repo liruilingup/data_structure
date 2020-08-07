@@ -5,6 +5,15 @@
 * abs(a - b) 表示绝对值
 * max(a, b) 取最大的
 * 指针可以使用start、end 或者 left、right
+```python
+for i in range(5, 0, -1):
+    print(i)   # 结果是5，4，3，2，1
+
+a=[1,2,3,4,5]
+for i in a[::-1]:  #a列表不变
+  print(i)
+
+```
 ##### python初始化函数
 ```python
 # 初始化函数没有参数
