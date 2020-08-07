@@ -13,8 +13,26 @@ for i in range(5, 0, -1):
 a=[1,2,3,4,5]
 for i in a[::-1]:  #a列表不变
   print(i)
-
 ```
+* readline()是读取一行，结果是一个str
+* readline().split()，结果是一个列表
+```python
+list_num = sys.stdin.readline().split() # spilt() 是把结果放到一个列表中
+N,M,K = [int(list_num[i]) for i in range(len(list_num))]
+N,M,K = map(int, list_num)
+res = list(map(int, list_num))
+```
+* 获取索引
+* 对10的9次方+7求余数
+
+```python
+temp = [x for x in range(0, 4)] # temp = [0, 1, 2, 3]
+# 获取索引
+nums = [1,2,3]
+print(nums.index(2))
+```
+
+
 ##### python初始化函数
 ```python
 # 初始化函数没有参数
