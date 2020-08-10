@@ -2,6 +2,7 @@
 ### python编程常用
 * ans = float('inf') 表示无穷大
 * ans = float("-inf") 表示无穷小
+* print(str(f).split('.')[0] + '.' + str(f).split('.')[1][:1]) # 保留一位小数，舍去方法
 * abs(a - b) 表示绝对值
 * max(a, b) 取最大的
 * 指针可以使用start、end 或者 left、right
