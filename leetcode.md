@@ -8,13 +8,16 @@
 * 指针可以使用start、end 或者 left、right
 * python反转一个列表
 ```python
-for i in range(5, 0, -1):
-    print(i)   # 结果是5，4，3，2，1
-
 a=[1,2,3,4,5]
 for i in a[::-1]:  #a列表不变
   print(i)
 ```
+* python倒着循环
+```python
+for i in range(5, 0, -1):
+    print(i)   # 结果是5，4，3，2，1
+```
+
 * readline()是读取一行，结果是一个str
 * readline().split()，结果是一个列表
 ```python
@@ -51,6 +54,7 @@ class tree:
 ```python
 for i in range(4):
 	print(i, end = ' ')
+```
 
 ------
 
