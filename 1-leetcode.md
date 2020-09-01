@@ -646,6 +646,425 @@ for i in range(1, len(prices)):
 print(profit)
 ```
 
+##### 判断是不是回文数字
+```python
+def isPalindrome(x):
+    x = str(x)
+    if x == x[::-1]:
+        return True
+    else:
+        return False
+
+
+def isPalindrome(x):
+    lst = list(str(x))
+    while len(lst) > 1:
+        if lst.pop(0) != lst.pop():
+            return  False
+    return True
+
+def isPalindrome(x):
+    lst = list(str(x))
+    L, R = 0, len(lst)-1
+    while L <= R:
+        if lst[L] != lst[R]:
+            return  False
+        L += 1
+        R -= 1
+    return True
+```
+
+
+
+#### 最长回文子串
+* 全部枚举
+```python
+s = 'cbbd'
+# 纯暴力法，全部枚举
+for i in range(len(s)-1):
+    for j in range(len(s),i+1,-1):
+        print(i,j, s[i:j])
+```
+* 动态规划
+
+```python
+class Solution:
+    def longestPalindrome(self, s):
+        n = len(s)
+        dp = [[False] * n for x in range(n)]
+        ans = ""
+        # 枚举子串的长度 l+1
+        for l in range(n):
+            # 枚举子串的起始位置 i，这样可以通过 j=i+l 得到子串的结束位置
+            for i in range(n):
+                j = i + l
+                if j >= len(s):
+                    break
+                if l == 0:
+                    dp[i][j] = True
+                elif l == 1:
+                    dp[i][j] = (s[i] == s[j])
+                else:
+                    dp[i][j] = (dp[i + 1][j - 1] and s[i] == s[j])
+                if dp[i][j] and l + 1 > len(ans):
+                    ans = s[i:j+1]
+        return ans
+```
+
+* 使用枚举法，但是有优化条件
+
+```python
+
+# 做一个优化：
+# 1、在第一个for循环之后，先判断已经求解的最大长度是否比接下来要比较的字符串长度要大，如果是大于待求解长度，则结束整个暴力求解，后面部分不需再求解
+# 2、在第二个for循环中，长度不再是在从2开始增加，而是从最大长度开始
+
+class Solution(object):
+    def longestPalindrome(self, s):
+
+        def ispalindrome(x): # 使用枚举法，但是有优化
+            return x == x[::-1]
+                
+        #如果长度小于2或者本身就是回文串，返回s
+        if len(s)<2 or s==s[::-1]:
+            return s
+
+        max_len = 1
+        num = s[0]
+        
+        for i in range(len(s)-1):
+            if max_len > len(s[i+1:]):           #待求解长度没有超过最大长度，结束
+                break
+            for j in range(i+max_len,len(s)):   #从长度为最大长度+1的子串开始求解
+                # print(i, j, len(s), s[i:j+1])
+                if ispalindrome(s[i:j+1]) and j-i+1>max_len:
+                    max_len = j-i+1
+                    num = s[i:j+1]
+        return num
+
+s = 'lababacde'
+print(Solution().longestPalindrome(s))
+```
+##### 无重复子串
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if s == '':
+            return 0
+        if len(s) == 1:
+            return 1
+
+        def find_left(s, i):
+            tmp_str = s[i]
+            j = i - 1
+            while j >= 0 and s[j] not in tmp_str:
+                tmp_str += s[j]
+                j -= 1
+            return len(tmp_str)
+        length = 0
+        for i in range(0, len(s)):
+            length = max(length, find_left(s, i))
+        return length
+```
+
+
+##### 整数反转
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        
+        a = str(x)
+        c=''
+        for i in range(len(a)):
+            c = c+str(a[len(a)-i-1])
+            if c[-1]=='-':
+                c = '-'+c[:-1]
+        c = int(c)
+        if c>=-2**31 and c <= 2**31-1:
+            return c
+        else:
+            return 0
+
+```
+
+##### 丑数
+
+```python
+# 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。求按从小到大的顺序的第 n 个丑数。
+def nthUglyNumber(n):
+    ugly = [1]
+    i2 = i3 = i5 =0
+    while n>1:
+        u2, u3, u5 = ugly[i2]*2, ugly[i3]*3, ugly[i5]*5
+        umin = min(u2, u3, u5)
+        if umin == u2:
+            i2 += 1
+        if umin == u3:
+            i3 += 1
+        if umin == u5:
+            i5 += 1
+        n -= 1
+        ugly.append(umin)
+    return ugly[-1]
+print(nthUglyNumber(10))
+```
+
+##### 快乐数字
+```python
+def isHappy(n):
+    res_table = set()
+    while 1:
+        n = [int(i) ** 2 for i in str(n)]
+        n = sum(n)
+        if n == 1:
+            return True
+        elif n in res_table:
+            return False
+        else:
+            res_table.add(n)
+print(isHappy(19))
+
+```
+
+#### 缺失数字
+```python
+def missingNumber(nums):
+    nums.sort()
+    if nums == [0]:
+        return 1
+    elif nums == [1]:
+        return 0
+    else:
+
+        for i in range(len(nums)):
+            if i != nums[i]:
+                return i
+        return len(nums)
+print(missingNumber([9,6,4,2,3,5,7,0,1]))
+```
+#### 完全平方数
+```python
+def numSquares(n):
+    lst = [i*i for i in range(1,n) if i*i <= n]
+    dp = [0 for i in range(n+1)]
+    for num in range(1,n+1):
+        min_num = num
+        for j in [c for c in lst if c <= num]:
+            if dp[num-j] + 1 < min_num:
+                min_num = dp[num-j] + 1
+        dp[num] = min_num
+    return dp[n]
+
+print(numSquares(13))
+```
+
+
+##### 判断一个字符串是不是回文串
+
+```python
+s = 'abaoooo'
+len_s = len(s)
+pal_length = 1
+for i in range(len_s, 0, -1):
+    sub_string = s[0:i]
+    if sub_string == sub_string[::-1]:
+        pal_length = len(sub_string)
+        break
+print(pal_length)
+
+``` 
+
+
+#### 动态规划，完全平方数
+
+* 给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+
+```python
+from typing import List
+def numSquares(n: int) -> int:
+    #完全背包 求装满背包所需要的最少重物
+    coins= [i*i for i in range(1,n+1) if i*i <= n]
+    #重物的列表
+    dp=[float('inf')]*(n +1)
+
+    dp[0]=0 #初始化不用任何重物填充容量为0的背包需要0个重物 填充容量为w>0不可行 设为float('inf)
+    for i in coins:
+        for j in range(i, n+1):
+            dp[j]=min(dp[j],dp[j-i]+1)
+    return dp[-1]
+
+print(numSquares(1))
+
+```
+
+##### 平方数之和
+* 给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a2 + b2 = c。
+```python
+class Solution:
+    def judgeSquareSum(self, c: int) -> bool:
+        i, j = 0, int(c**0.5)
+        while i <= j:
+            if i*i + j*j == c:
+                return True
+            elif i*i + j*j > c:
+                j -= 1
+            else:
+                i += 1
+        return False
+
+```
+
+## 字符串
+#### 最长不含重复字符的子字符串
+
+```python
+s = "abcaaa"
+queue = []
+
+max_len = 0
+for i in s:
+    if i not in queue:
+        queue.append(i)
+    else:
+        while queue[0] != i:
+            queue.pop(0)
+        queue.pop(0)
+        queue.append(i)
+    print(queue)
+    max_len = max(max_len, len(queue))
+
+print(max_len)
+```
+
+#### 数字反转
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        #将整数的绝对值转换成字符串
+        s=str(abs(x))
+        #翻转字符串
+        s=s[::-1]
+        #如果输入整数是负数，增加负号
+        if x <0:
+            s ='-' + s
+        #转换为整数
+        result = int(s)
+        #判断是否溢出
+        if result>=-2**31 and result<=2**31-1:
+            return result
+        else:
+            return 0
+
+```
+
+
+##### 丑数
+* 丑数的递推性质： 丑数只包含因子 2, 3, 5 ，因此有 “丑数 == 某较小丑数 * 某因子” （例如：10 = 5 * 2）
+
+```python
+def nthUglyNumber(n: int) -> int:
+    ## 利用数组记录
+    dp, a, b, c = [1] * n, 0, 0, 0
+    for i in range(1, n):
+        n2, n3, n5 = dp[a] * 2, dp[b] * 3, dp[c] * 5
+        dp[i] = min(n2, n3, n5)
+        if dp[i] == n2: a += 1
+        if dp[i] == n3: b += 1
+        if dp[i] == n5: c += 1
+    return dp[-1]
+
+print(nthUglyNumber(12))
+
+
+
+```
+
+
+##### 翻转数位
+* 给定一个32位整数 num，你可以将一个数位从0变为1。请编写一个程序，找出你能够获得的最长的一串1的长度。
+
+```python
+class Solution:
+    def reverseBits(self, num: int) -> int:
+        pre, insert, m = 0,0,0
+        for x in bin(num): #如果全是1，0b的第一个0也要算上
+            print(x)
+            if x == '1':
+                pre += 1
+                insert += 1
+                m = max(m, insert)
+            elif x == '0':
+                insert = pre + 1
+                pre = 0
+                m = max(m,insert)
+        return m
+
+```
+
+
+##### 移掉K位数字
+* 给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小。
+* 两个相同位数的数字大小关系取决于第一个不同的数的大小。
+
+```python
+# https://leetcode-cn.com/problems/remove-k-digits/solution/yi-zhao-chi-bian-li-kou-si-dao-ti-ma-ma-zai-ye-b-5/
+# "10200", 1
+# "10", 1
+# "10" 2
+
+class Solution(object):
+    def removeKdigits(self, num, k):
+        stack = []
+        remain = len(num) - k
+        for digit in num:
+            while k and stack and stack[-1] > digit:
+                stack.pop()
+                k -= 1
+            stack.append(digit)
+        return ''.join(stack[:remain]).lstrip('0') or '0'
+        # res = ''.join(stack[:remain]).lstrip('0')
+        # return res if res else '0'
+print(Solution().removeKdigits(num = "432219", k = 3))
+```
+#####  盛水的最大容器
+* 使用双指针，移动短板
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        i, j, res = 0, len(height) -1, 0
+        while i < j:
+            if height[i] < height[j]:
+                res = max(res, (j-i) * height[i])
+                i += 1
+            else:
+                res = max(res, (j-i) * height[j])
+                j -= 1
+        return res
+```
+
+
+
+#####  最长公共前缀
+* 输入: ["flower","flow","flight"]
+* 输出: "fl"
+```python
+
+def fun():
+    strs = ["flower","flow","flight"]
+
+    length, count = len(strs[0]), len(strs)
+
+    for i in range(length):
+        c = strs[0][i]
+        for j in range(1, count):
+            if i == len(strs[j]) or strs[j][i] != c:
+                return strs[0][:i]
+    return strs[0]
+print(fun()) 
+```
+
+
 
 -------
 
