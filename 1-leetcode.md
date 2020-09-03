@@ -6,6 +6,10 @@
 * abs(a - b) 表示绝对值
 * max(a, b) 取最大的
 * 指针可以使用start、end 或者 left、right
+* 前后各去掉一位 s = s[1:-1]
+* 转换成二进制，print(str(bin(255))), 前两位是0b
+* Python lstrip() 方法用于截掉字符串左边的空格或指定字符。如：print(str('0123').lstrip('0'))
+
 * python反转一个列表
 ```python
 a=[1,2,3,4,5]
@@ -26,16 +30,13 @@ N,M,K = [int(list_num[i]) for i in range(len(list_num))]
 N,M,K = map(int, list_num)
 res = list(map(int, list_num))
 ```
-* 获取索引
-* 对10的9次方+7求余数
+* 获取索引 nums = [1,2,3]，print(nums.index(2))
+
 
 ```python
 temp = [x for x in range(0, 4)] # temp = [0, 1, 2, 3]
-# 获取索引
-nums = [1,2,3]
-print(nums.index(2))
 ```
-
+* 对10的9次方+7求余数 s = 3 % 1000000007
 
 ##### python初始化函数
 ```python
