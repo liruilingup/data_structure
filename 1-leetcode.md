@@ -9,6 +9,8 @@
 * 前后各去掉一位 s = s[1:-1]
 * 转换成二进制，print(str(bin(255))), 前两位是0b
 * Python lstrip() 方法用于截掉字符串左边的空格或指定字符。如：print(str('0123').lstrip('0'))
+* 把字符串转换成列表， lst = list(str('abcd')) print(lst) # ['a', 'b', 'c', 'd']
+* x[::1]是复制，x[::-1]是反转，列表个字符串都可以使用
 
 * python反转一个列表
 ```python
