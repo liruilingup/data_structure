@@ -40,6 +40,18 @@ temp = [x for x in range(0, 4)] # temp = [0, 1, 2, 3]
 ```
 * 对10的9次方+7求余数 s = 3 % 1000000007
 
+* python大小写转换
+```python
+str1 = 'This boy is good'
+print(str1.upper())          # 把所有字符中的小写字母转换成大写字母
+print(str1.lower())          # 把所有字符中的大写字母转换成小写字母
+n = 'W'
+if "a"<= n <= "z":
+    print(n.upper())
+if "A" <= n <= "Z" :
+    print(n.lower())
+```
+
 ##### python初始化函数
 ```python
 # 初始化函数没有参数
