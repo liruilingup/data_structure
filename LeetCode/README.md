@@ -91,4 +91,14 @@ def twoNum1(nums, target):
     return []
 print(twoNum1(nums, target))
 ```
-
+[回文数](https://leetcode-cn.com/problems/palindrome-number/)
+* 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+```python
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        x = str(x)
+        if x == x[::-1]:
+            return True
+        else:
+            return False
+```
