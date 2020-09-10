@@ -11,8 +11,9 @@
 [4.移除链表重复节点](https://leetcode-cn.com/problems/remove-duplicate-node-lcci/)  
 [5.环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)  
 * 给定一个链表，判断链表中是否有环。
-使用快慢指针  
+ 
 ```python
+# 使用快慢指针 
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
         if not head or not head.next: return False
@@ -26,9 +27,9 @@ class Solution:
         return False
 ```
 [6.环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/)  
-* 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
-快慢指针之间走的步数有关系  
+* 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。  
 ```python
+#快慢指针之间走的步数有关系 
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
         slow = head
