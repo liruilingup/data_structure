@@ -19,3 +19,6 @@
 [公众号推荐参考](https://github.com/labuladong/fucking-algorithm)  
 
 [书本](https://runestone.academy/runestone/books/published/pythonds/index.html)
+
+[算法学习](https://github.com/labuladong/fucking-algorithm)
+[面试题](https://github.com/Jack-Lee-Hiter/AlgorithmsByPython)
