@@ -60,3 +60,35 @@ class Solution:
             l2 = l2.next if l2 else None
         return dummy.next
 ```
+
+[两数之和](https://leetcode-cn.com/problems/two-sum/)
+* 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+* 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+```python
+def twoNum(nums, target):
+    hashMap = {}
+    for index, num in enumerate(nums):
+        hashMap[num] = index
+
+    for i, num in enumerate(nums):
+        j = hashMap.get(target-num)
+        if j is not None and i!=j:
+            return [i,j]
+# 方法二
+nums = [9, 9, 11, 15]
+target = 18
+def twoNum1(nums, target):
+    for i in range(len(nums)):
+        if (target - nums[i]) in nums and (target - nums[i] != nums[i]): # 要考虑相等情况，并且数组中两个数一样
+            return [i, nums.index(target - nums[i])]
+        if (target - nums[i] == nums[i]) and nums.count(nums[i]) > 1:
+            count = 0
+            for k in range(len(nums)):
+                if nums[k] == nums[i]:
+                    count += 1
+                if count == 2:
+                    return [i, k]
+    return []
+print(twoNum1(nums, target))
+```
+
