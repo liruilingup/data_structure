@@ -163,3 +163,60 @@ class Solution:
                     right -= 1
         return ans
 ```
+[四数之和](https://leetcode-cn.com/problems/4sum/)
+* 给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
+```python
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort()
+        res = []
+        sums = 0
+        if not nums or len(nums) < 4: return []
+        for i in range(len(nums) - 3):
+            if i > 0 and nums[i] == nums[i-1]:continue
+            for j in range(i+1, len(nums) - 2):
+                if j > i+1 and nums[j] == nums[j-1]:continue
+                left,right = j+1, len(nums)-1
+                while left < right:
+                    sums = nums[i] + nums[j] + nums[left] + nums[right]
+                    if sums == target:
+                        res.append([nums[i],nums[j],nums[left],nums[right]])
+                        left += 1
+                        while left < right and nums[left] == nums[left -1 ]:
+                            left += 1
+                        right -= 1
+                        while left < right and nums[right] == nums[right+1]:
+                            right -= 1
+                    elif sums < target:
+                        left += 1
+                        while left < right and nums[left] == nums[left-1]:
+                            left += 1
+                    else:
+                        right -= 1
+                        while left < right and nums[right] == nums[right+1]:
+                            right -= 1
+        return res
+```
+
+[回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/)
+* 判断是否是回文链表
+
+```python
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        pre = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            tmp = slow # 反转链表，使用fast反转链表的一半
+            slow = slow.next
+            tmp.next = pre
+            pre = tmp
+
+        if fast: 
+            slow = slow.next
+        while pre and pre.val ==slow.val:
+            pre = pre.next
+            slow = slow.next
+        return not pre
+```
