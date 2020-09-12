@@ -139,3 +139,27 @@ def threeSum(nums):
 print(threeSum(nums))
 
 ```
+[最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)
+* 给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
+
+```python
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        if not nums:return 0
+        if len(nums) <= 3: return sum(nums)
+        ans = float('inf') # 用于记录最小的差值
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:continue
+            left, right = i+1, len(nums)-1
+            while left < right:
+                sums = nums[i] + nums[left] + nums[right]
+                if sums == target:return target
+                if abs(target - sums) < abs(target - ans):
+                    ans = sums # ans是返回的值，也是之前的sums
+                if sums < target:
+                    left += 1
+                if sums > target:
+                    right -= 1
+        return ans
+```
