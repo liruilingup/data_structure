@@ -21,6 +21,7 @@ class linkList(object):
                 node = Node(num)
                 node.next = temp.next
                 temp.next = node
+                
         return new_head
 
 
