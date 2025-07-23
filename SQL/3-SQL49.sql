@@ -31,9 +31,6 @@ INSERT INTO attendent_tb VALUES(105,5,'2022-03-22 09:00:00','2022-03-22 18:10:00
 INSERT INTO attendent_tb VALUES(106,6,'2022-03-22 09:15:00','2022-03-22 19:30:00');
 INSERT INTO attendent_tb VALUES(107,7,'2022-03-22 09:30:00','2022-03-22 18:29:00');
 
-
-
-
 select s.post as post, avg(timestampdiff(second, first_clockin, last_clockin)/ (60*60)) as work_hours
 from attendent_tb a
 left join staff_tb s
@@ -41,3 +38,4 @@ on s.staff_id = a.staff_id
 group by s.post
 order by work_hours DESC
 ;
+
